@@ -13,7 +13,7 @@ import javax.swing.table.TableModel;
 
 /**
  *
- * @author Bristy
+ * @author Sweety
  */
 public class ManageCategory extends javax.swing.JFrame {
 

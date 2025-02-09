@@ -15,7 +15,7 @@ import javax.swing.table.TableModel;
 
 /**
  *
- * @author Bristy
+ * @author Sweety
  */
 public class ManageCustomer extends javax.swing.JFrame {
     private int customerPK = 0;

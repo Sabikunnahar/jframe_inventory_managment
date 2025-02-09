@@ -12,7 +12,7 @@ import javax.swing.table.TableModel;
 
 /**
  *
- * @author Bristy
+ * @author Sweety
  */
 public class ManageProduct extends javax.swing.JFrame {
 
@@ -267,14 +267,14 @@ public class ManageProduct extends javax.swing.JFrame {
         String name = model.getValueAt(index, 1).toString();
         txtName.setText(name);
 
-        String mobileNumber = model.getValueAt(index, 2).toString();
-        txtQuantity.setText(mobileNumber);
+        String quantity = model.getValueAt(index, 2).toString();
+        txtQuantity.setText(quantity);
 
-        String email = model.getValueAt(index, 3).toString();
-        txtPrice.setText(email);
+        String price = model.getValueAt(index, 3).toString();
+        txtPrice.setText(price);
 
-        String address = model.getValueAt(index, 4).toString();
-        txtDescription.setText(address);
+        String description = model.getValueAt(index, 4).toString();
+        txtDescription.setText(description);
 
         String status = model.getValueAt(index, 5).toString();
         comboBoxCategory.removeAllItems();

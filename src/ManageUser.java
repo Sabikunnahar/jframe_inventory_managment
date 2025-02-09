@@ -14,7 +14,7 @@ import javax.swing.table.TableModel;
  */
 /**
  *
- * @author Bristy
+ * @author Sweety
  */
 public class ManageUser extends javax.swing.JFrame {
 

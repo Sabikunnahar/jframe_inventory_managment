@@ -1,19 +1,45 @@
+
+import dao.ConnectionProvider;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
  *
- * @author Bristy
+ * @author Sweety
  */
 public class ManageOrder extends javax.swing.JFrame {
+
+    private int customerPK = 0;
+    private int productPK = 0;
+    private int finalTotalPrice = 0;
+    private String orderId = "";
 
     /**
      * Creates new form ManageOrder
      */
     public ManageOrder() {
         initComponents();
+        setLocationRelativeTo(null);
+    }
+
+    private void clearProductFields() {
+        productPK = 0;
+        txtProductName.setText("");
+        txtProductDescription.setText("");
+        txtProductPrice.setText("");
+        txtOrderQuantity.setText("");
+    }
+
+    private String getUniqueId(String prefix) {
+        return prefix + System.nanoTime();
     }
 
     /**
@@ -25,21 +51,289 @@ public class ManageOrder extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tableCustomer = new javax.swing.JTable();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tableProduct = new javax.swing.JTable();
+        jLabel4 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tableCart = new javax.swing.JTable();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        txtCustomerName = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        txtCustomerMobileNumber = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        txtCustomerEmail = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        txtProductName = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        txtProductDescription = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        txtProductPrice = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        txtOrderQuantity = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jLabel14 = new javax.swing.JLabel();
+        lblFinalTotalPrice = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setFont(new java.awt.Font("Impact", 1, 36)); // NOI18N
+        jLabel1.setText("Manage Order");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(484, 23, -1, -1));
+
+        jLabel2.setFont(new java.awt.Font("Impact", 1, 14)); // NOI18N
+        jLabel2.setText("Customer List");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 130, -1, -1));
+
+        tableCustomer.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "ID", "Name", "Mobile Number", "Email"
+            }
+        ));
+        tableCustomer.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableCustomerMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tableCustomer);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 333, 228));
+
+        jLabel3.setFont(new java.awt.Font("Impact", 1, 14)); // NOI18N
+        jLabel3.setText("Product List");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 130, -1, -1));
+
+        tableProduct.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "ID", "Quantity", "Price", "Description", "Category ID", "Category Name"
+            }
+        ));
+        tableProduct.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableProductMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tableProduct);
+
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 160, 434, 228));
+
+        jLabel4.setFont(new java.awt.Font("Impact", 1, 14)); // NOI18N
+        jLabel4.setText("Cart");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 130, -1, -1));
+
+        tableCart.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Product ID", "Name", "Quantity", "Price", "Sub Total"
+            }
+        ));
+        jScrollPane3.setViewportView(tableCart);
+
+        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 160, -1, 226));
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel5.setText("Selected Customer");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 420, -1, -1));
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel6.setText("Name");
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 460, -1, -1));
+        getContentPane().add(txtCustomerName, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 480, 270, -1));
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel7.setText("Mobile Number");
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 520, -1, -1));
+        getContentPane().add(txtCustomerMobileNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 550, 260, -1));
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel8.setText("Email");
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 590, -1, -1));
+        getContentPane().add(txtCustomerEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 620, 260, -1));
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel9.setText("Selected Product");
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 420, -1, -1));
+
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel10.setText("Product Name");
+        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 450, -1, -1));
+        getContentPane().add(txtProductName, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 470, 240, -1));
+
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel11.setText("Product Description");
+        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 500, -1, -1));
+        getContentPane().add(txtProductDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 520, 240, -1));
+
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel12.setText("Product Price");
+        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 560, -1, -1));
+
+        txtProductPrice.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtProductPriceActionPerformed(evt);
+            }
+        });
+        getContentPane().add(txtProductPrice, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 580, 240, -1));
+
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel13.setText("Orderd quantity");
+        getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 610, -1, -1));
+        getContentPane().add(txtOrderQuantity, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 630, 240, -1));
+
+        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton1.setText("Add to Cart");
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 680, -1, -1));
+
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel14.setText("Total Amount TK:");
+        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 430, -1, -1));
+
+        lblFinalTotalPrice.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblFinalTotalPrice.setText("00000000");
+        getContentPane().add(lblFinalTotalPrice, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 430, -1, -1));
+
+        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton2.setText("Save The Order");
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 490, 230, -1));
+
+        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton3.setText("Reset");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 530, 230, -1));
+
+        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton4.setText("Close");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 570, 230, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        // TODO add your handling code here:
+        txtCustomerName.setEditable(false);
+        txtCustomerMobileNumber.setEditable(false);
+        txtCustomerEmail.setEditable(false);
+
+        txtProductName.setEditable(false);
+        txtProductDescription.setEditable(false);
+        txtProductPrice.setEditable(false);
+
+        DefaultTableModel model = (DefaultTableModel) tableCustomer.getModel();
+        DefaultTableModel productmodel = (DefaultTableModel) tableProduct.getModel();
+
+        try {
+            Connection con = ConnectionProvider.getCon();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("select * from customer");
+            while (rs.next()) {
+                model.addRow(new Object[]{rs.getString("customer_pk"), rs.getString("name"), rs.getString("mobileNumber"), rs.getString("email")});
+            }
+            rs = st.executeQuery("select * from product inner join category on product.category_fk = category.category_pk");
+            while (rs.next()) {
+                productmodel.addRow(new Object[]{rs.getString("product_pk"), rs.getString("name"), rs.getString("quantity"), rs.getString("price"), rs.getString("description"), rs.getString("category_fk"), rs.getString(8)});
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+
+
+    }//GEN-LAST:event_formComponentShown
+
+    private void txtProductPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProductPriceActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtProductPriceActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        setVisible(false);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        setVisible(false);
+        new ManageOrder().setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void tableCustomerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableCustomerMouseClicked
+        // TODO add your handling code here:
+        int index = tableCustomer.getSelectedRow();
+        TableModel model = tableCustomer.getModel();
+
+        String id = model.getValueAt(index, 0).toString();
+        customerPK = Integer.parseInt(id);
+
+        String name = model.getValueAt(index, 1).toString();
+        txtCustomerName.setText(name);
+
+        String mobileNumber = model.getValueAt(index, 2).toString();
+        txtCustomerMobileNumber.setText(mobileNumber);
+
+        String email = model.getValueAt(index, 3).toString();
+        txtCustomerEmail.setText(email);
+
+
+    }//GEN-LAST:event_tableCustomerMouseClicked
+
+    private void tableProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableProductMouseClicked
+        // TODO add your handling code here:
+        int index = tableProduct.getSelectedRow();
+        TableModel model = tableProduct.getModel();
+
+        String id = model.getValueAt(index, 0).toString();
+        productPK = Integer.parseInt(id);
+
+        String name = model.getValueAt(index, 1).toString();
+        txtProductName.setText(name);
+
+        String price = model.getValueAt(index, 3).toString();
+        txtProductPrice.setText(price);
+
+        String description = model.getValueAt(index, 4).toString();
+        txtProductDescription.setText(description);
+
+    }//GEN-LAST:event_tableProductMouseClicked
 
     /**
      * @param args the command line arguments
@@ -77,5 +371,37 @@ public class ManageOrder extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel lblFinalTotalPrice;
+    private javax.swing.JTable tableCart;
+    private javax.swing.JTable tableCustomer;
+    private javax.swing.JTable tableProduct;
+    private javax.swing.JTextField txtCustomerEmail;
+    private javax.swing.JTextField txtCustomerMobileNumber;
+    private javax.swing.JTextField txtCustomerName;
+    private javax.swing.JTextField txtOrderQuantity;
+    private javax.swing.JTextField txtProductDescription;
+    private javax.swing.JTextField txtProductName;
+    private javax.swing.JTextField txtProductPrice;
     // End of variables declaration//GEN-END:variables
 }
