@@ -6,6 +6,8 @@ import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import java.sql.*;
+
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -214,6 +216,11 @@ public class ManageOrder extends javax.swing.JFrame {
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton1.setText("Add to Cart");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 680, -1, -1));
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -334,6 +341,24 @@ public class ManageOrder extends javax.swing.JFrame {
         txtProductDescription.setText(description);
 
     }//GEN-LAST:event_tableProductMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String noOfUnits = txtOrderQuantity.getText();
+        if(!noOfUnits.equals("")){
+            String productName= txtProductName.getText();
+            String productDescription= txtProductDescription.getText();
+            String productPrice= txtProductPrice.getText();
+            
+            int totalPrice = Integer.parseInt(txtOrderQuantity.getText())*Integer.parseInt(productPrice);
+            
+            int checkStock =0;
+            
+        }
+        else{
+        JOptionPane.showMessageDialog(null, "Quantity and Products are required !");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
